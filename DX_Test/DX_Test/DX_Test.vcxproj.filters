@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{1ca262ac-7989-4fce-b986-d3e15bf5b6fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="기타">
+      <UniqueIdentifier>{e182411c-2d23-447b-ad74-ce58b24de49e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{00c5d55d-fcd7-4a9f-901e-2b6b86776e95}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>기타</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>기타</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>기타</Filter>
+    </ClInclude>
+    <ClInclude Include="DX_Test.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DX_Test.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="DX_Test.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Core.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="DX_Test.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
