@@ -1,6 +1,8 @@
-﻿#include "framework.h"
+﻿#include "PreCompile.h"
+#include "framework.h"
 #include "DX_Test.h"
 #include "Core.h"
+
 
 #define MAX_LOADSTRING 100
 
@@ -10,6 +12,7 @@ WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 HWND hWnd;
 HDC hdc;
+bool LoopActive = true;
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -42,23 +45,32 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
-    Core::Start();
+    UCore::Start();
 
     // 기본 메시지 루프입니다:
-    while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+    while (true == LoopActive)
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
 
-        Core::Tick();
+        UCore::Tick();
     }
 
-    Core::End();
+    UCore::End();
 
     return (int) msg.wParam;
+}
+
+void SetWindowPosAndScale(FVector _Pos, FVector _Scale)
+{
+    FVector WindowSize = _Scale;
+    RECT Rc = { 0, 0, _Scale.iX(), _Scale.iY() };
+
+    AdjustWindowRect(&Rc, WS_OVERLAPPEDWINDOW, FALSE);
+    ::SetWindowPos(hWnd, nullptr, _Pos.iX(), _Pos.iY(), Rc.right - Rc.left, Rc.bottom - Rc.top, SWP_NOZORDER);
 }
 
 ATOM MyRegisterClass(HINSTANCE hInstance)
@@ -100,16 +112,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
-//
-//  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
-//
-//  용도: 주 창의 메시지를 처리합니다.
-//
-//  WM_COMMAND  - 애플리케이션 메뉴를 처리합니다.
-//  WM_PAINT    - 주 창을 그립니다.
-//  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
-//
-//
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -140,6 +142,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_DESTROY:
+        LoopActive = false;
         PostQuitMessage(0);
         break;
     default:

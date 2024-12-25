@@ -1,32 +1,43 @@
+#include "PreCompile.h"
 #include "Core.h"
 #include "Renderer.h"
 #include <iostream>
+#include "Level.h"
+#include "GameMode.h"
 
-URenderer Core::Renderer;
+URenderer UCore::Renderer;
+FVector UCore::WindowSize = { 100, 100 };
+UEngineTimer UCore::Timer;
+ULevel* UCore::CurLevel;
 
-Core::Core()
+UCore::UCore()
 {
 }
 
-Core::~Core()
+UCore::~UCore()
 {
 }
 
-void Core::Start()
+void UCore::Start()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	WindowSize = { 1280, 900 };
+	SetWindowPosAndScale({ 100, 100 }, WindowSize);
+
 	Renderer.BeginPlay();
+	CreateLevel<AGameMode>();
 }
 
-void Core::Tick()
+void UCore::Tick()
 {
-	while (true)
-	{
-		Renderer.Render();
-	}
+	Timer.TimeCheck();
+	float DeltaTime = Timer.GetDeltaTime();
+	CurLevel->Tick(DeltaTime);
+	CurLevel->Render(DeltaTime);
 }
 
-void Core::End()
+void UCore::End()
 {
 	Renderer.Release();
 }

@@ -14,6 +14,12 @@
     <Filter Include="Main">
       <UniqueIdentifier>{00c5d55d-fcd7-4a9f-901e-2b6b86776e95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PreCompile">
+      <UniqueIdentifier>{44c7d9f1-7e41-482a-b87d-b1117b82a2ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsLevel">
+      <UniqueIdentifier>{3327a27f-29a0-4ee9-9e46-01bec92ca8fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -32,6 +38,18 @@
       <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="Actor.h" />
+    <ClInclude Include="PreCompile.h">
+      <Filter>PreCompile</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ContentsLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMode.h">
+      <Filter>ContentsLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX_Test.rc">
@@ -54,5 +72,17 @@
     <ClCompile Include="DX_Test.cpp">
       <Filter>Main</Filter>
     </ClCompile>
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="PreCompile.cpp">
+      <Filter>PreCompile</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ContentsLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMode.cpp">
+      <Filter>ContentsLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentRenderer.cpp" />
   </ItemGroup>
 </Project>
