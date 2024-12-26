@@ -135,10 +135,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ComponentRenderer.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Core.h">
       <SubType>
       </SubType>
@@ -146,6 +142,10 @@
     <ClInclude Include="DX_Test.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GraphicsDevice.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -173,16 +173,16 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ComponentRenderer.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Core.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="DX_Test.cpp" />
     <ClCompile Include="GameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GraphicsDevice.cpp">
       <SubType>
       </SubType>
     </ClCompile>

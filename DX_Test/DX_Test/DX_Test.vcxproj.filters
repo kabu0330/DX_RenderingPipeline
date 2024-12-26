@@ -49,7 +49,7 @@
     <ClInclude Include="GameMode.h">
       <Filter>ContentsLevel</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentRenderer.h" />
+    <ClInclude Include="GraphicsDevice.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX_Test.rc">
@@ -83,6 +83,6 @@
     <ClCompile Include="GameMode.cpp">
       <Filter>ContentsLevel</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentRenderer.cpp" />
+    <ClCompile Include="GraphicsDevice.cpp" />
   </ItemGroup>
 </Project>

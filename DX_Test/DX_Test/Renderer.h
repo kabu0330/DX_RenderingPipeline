@@ -2,19 +2,10 @@
 
 #include <Base/EngineMath.h>
 
-#include <d3d11_4.h> 
-#include <d3dcompiler.h> 
-
-#pragma comment(lib, "d3d11")
-#pragma comment(lib, "d3dcompiler") 
-#pragma comment(lib, "dxguid")
-
-#pragma comment(lib, "DXGI") 
-
 struct VertexData
 {
 	float4 POSITION;
-	float4 TEXCOORD;
+	/*float4 TEXCOORD;*/
 	float4 COLOR;
 };
 
@@ -32,27 +23,17 @@ public:
 	URenderer& operator=(const URenderer& _Other) = delete;
 	URenderer& operator=(URenderer&& _Other) noexcept = delete;
 
-	void CreateDeviceAndContext();
-	void CreateBackBuffer();
-
-	void RenderStart();
-	void RenderEnd();
 	virtual void Render(float _DeltaTime);
 
-	virtual void BeginPlay();
-	virtual	void Release();
 
-	ID3D11Device* Device = nullptr;
-	ID3D11DeviceContext* Context = nullptr;
+
+	void BeginPlay();
+	void Release() {}
 
 protected:
 
 private:
-	IDXGIAdapter* MainAdapter = nullptr;
-	IDXGISwapChain* SwapChain = nullptr;
 
-	ID3D11Texture2D* BackBufferTexture = nullptr;
-	ID3D11RenderTargetView* RTV = nullptr;
 
 private:
 	// 상수버퍼

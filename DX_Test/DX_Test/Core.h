@@ -2,6 +2,7 @@
 #include "Renderer.h"
 #include <Base/EngineTimer.h>
 #include "Level.h"
+#include "GraphicsDevice.h"
 
 // Ό³Έν :
 class UCore
@@ -37,7 +38,7 @@ public:
 		return CurLevel;
 	}
 
-	static URenderer Renderer;
+	static UGraphicsDevice GraphicsDevice;
 
 	static FVector WindowSize;
 

@@ -17,6 +17,7 @@ public:
 
 	void Tick(float _DeltaTime);
 	void Render(float _DeltaTime);
+	void Release();
 	void BeginPlayCheck();
 
 	template<typename ActorType>
@@ -25,7 +26,6 @@ public:
 		static_assert(std::is_base_of_v<AActor, ActorType>, "액터만 스폰할 수 있습니다.");
 
 		AActor* NewActor = new ActorType();
-		AllActors.push_back(NewActor);
 		BeginPlayActors.push_back(NewActor);
 
 		return static_cast<ActorType*>(NewActor);

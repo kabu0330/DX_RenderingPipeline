@@ -14,6 +14,7 @@ void ULevel::BeginPlayCheck()
 	for (AActor* Actor : BeginPlayActors)
 	{
 		Actor->BeginPlay();
+		AllActors.push_back(Actor);
 	}
 	BeginPlayActors.clear();
 }
@@ -30,14 +31,22 @@ void ULevel::Tick(float _DeltaTime)
 
 void ULevel::Render(float _DeltaTime)
 {
-	UCore::Renderer.RenderStart();
+	UCore::GraphicsDevice.RenderStart();
 
 	for (AActor* Actor : AllActors)
 	{
 		Actor->Render(_DeltaTime);
 	}
 
-	UCore::Renderer.RenderEnd();
+	UCore::GraphicsDevice.RenderEnd();
+}
+
+void ULevel::Release()
+{
+	for (AActor* Actor : AllActors)
+	{
+		delete Actor;
+	}
 }
 
 

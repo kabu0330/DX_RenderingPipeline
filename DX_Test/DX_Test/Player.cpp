@@ -1,9 +1,9 @@
 #include "PreCompile.h"
 #include "Player.h"
-#include "ComponentRenderer.h"
 
 APlayer::APlayer()
 {
+	PlayerRenderer = CreateDefaultSubObject<URenderer>();
 }
 
 APlayer::~APlayer()
@@ -12,11 +12,11 @@ APlayer::~APlayer()
 
 void APlayer::BeginPlay()
 {
-	PlayerRenderer = CreateDefaultSubObject<UComponentRenderer>();
-
+	Super::BeginPlay();
 }
 
 void APlayer::Tick(float _DeltaTime)
 {
+	Super::Tick(_DeltaTime);
 }
 

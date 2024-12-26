@@ -21,7 +21,7 @@ public:
 protected:
 
 private:
-	class UComponentRenderer* PlayerRenderer;
+	class URenderer* PlayerRenderer;
 
 };
 

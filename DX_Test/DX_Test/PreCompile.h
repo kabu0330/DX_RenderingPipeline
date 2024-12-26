@@ -15,12 +15,22 @@
 #include <map>
 #include <Windows.h>
 
+#include <d3d11_4.h> 
+#include <d3dcompiler.h> 
+
+#pragma comment(lib, "d3d11")
+#pragma comment(lib, "d3dcompiler") 
+#pragma comment(lib, "dxguid")
+
+#pragma comment(lib, "DXGI") 
+
+
 #include "DX_Test.h"
 #include "Core.h"
 #include "Renderer.h"
 #include "Level.h"
 #include "Actor.h"
-#include "ComponentRenderer.h"
+#include "GraphicsDevice.h"
 
 extern HINSTANCE hInst;
 extern HWND hWnd;

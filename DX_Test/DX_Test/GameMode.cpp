@@ -5,6 +5,7 @@
 
 AGameMode::AGameMode()
 {
+
 }
 
 AGameMode::~AGameMode()
@@ -16,7 +17,6 @@ void AGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	Rect = UCore::GetWorld()->SpawnActor<APlayer>();
-
 }
 
 void AGameMode::Tick(float _DeltaTime)

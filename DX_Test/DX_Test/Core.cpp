@@ -5,7 +5,7 @@
 #include "Level.h"
 #include "GameMode.h"
 
-URenderer UCore::Renderer;
+UGraphicsDevice UCore::GraphicsDevice;
 FVector UCore::WindowSize = { 100, 100 };
 UEngineTimer UCore::Timer;
 ULevel* UCore::CurLevel;
@@ -25,7 +25,7 @@ void UCore::Start()
 	WindowSize = { 1280, 900 };
 	SetWindowPosAndScale({ 100, 100 }, WindowSize);
 
-	Renderer.BeginPlay();
+	GraphicsDevice.Init();
 	CreateLevel<AGameMode>();
 }
 
@@ -39,6 +39,6 @@ void UCore::Tick()
 
 void UCore::End()
 {
-	Renderer.Release();
+	GraphicsDevice.Release();
 }
 
