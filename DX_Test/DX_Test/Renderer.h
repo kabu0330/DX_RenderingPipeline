@@ -27,7 +27,7 @@ public:
 	virtual void Render(float _DeltaTime);
 
 	void BeginPlay() override;
-	void Release() {}
+	void Release();
 
 protected:
 

@@ -50,6 +50,9 @@
       <Filter>ContentsLevel</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsDevice.h" />
+    <ClInclude Include="MemoryTrace.h">
+      <Filter>Main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX_Test.rc">
@@ -84,5 +87,8 @@
       <Filter>ContentsLevel</Filter>
     </ClCompile>
     <ClCompile Include="GraphicsDevice.cpp" />
+    <ClCompile Include="MemoryTrace.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

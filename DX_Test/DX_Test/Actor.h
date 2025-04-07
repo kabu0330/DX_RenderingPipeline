@@ -19,6 +19,7 @@ public:
 	virtual void Tick(float _DeltaTime) {}
 
 	void Render(float _DeltaTime);
+	void Release();
 
 
 	template<typename ComponetType>

@@ -288,4 +288,10 @@ void UGraphicsDevice::Release()
 		RTV->Release();
 		RTV = nullptr;
 	}
+
+	//if (nullptr != MainAdapter)
+	//{
+	//	MainAdapter->Release();
+	//	MainAdapter = nullptr;
+	//}
 }

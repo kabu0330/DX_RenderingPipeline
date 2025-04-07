@@ -9,11 +9,7 @@ AActor::AActor()
 
 AActor::~AActor()
 {
-	for (URenderer* Renderer : Renderers)
-	{
-		delete Renderer;
-	}
-	Renderers.clear();
+
 }
 
 void AActor::BeginPlay()
@@ -41,3 +37,12 @@ void AActor::ComponentBeginPlay()
 	}
 }
 
+void AActor::Release()
+{
+	for (URenderer* Renderer : Renderers)
+	{
+		Renderer->Release();
+		delete Renderer;
+	}
+	Renderers.clear();
+}

@@ -16,6 +16,7 @@ void ULevel::BeginPlayCheck()
 		Actor->BeginPlay();
 		AllActors.push_back(Actor);
 	}
+
 	BeginPlayActors.clear();
 }
 
@@ -45,8 +46,11 @@ void ULevel::Release()
 {
 	for (AActor* Actor : AllActors)
 	{
+		Actor->Release();
 		delete Actor;
 	}
+
+	AllActors.clear();
 }
 
 

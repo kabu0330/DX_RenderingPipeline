@@ -3,8 +3,19 @@
 #include "DX_Test.h"
 #include "Core.h"
 
+#define _CRTDBG_MAP_ALLOC
+#include <cstdlib>
+#include <crtdbg.h>
+
+#include "MemoryTrace.h"
 
 #define MAX_LOADSTRING 100
+
+#if defined(_DEBUG)
+#include <vld.h>
+#endif
+
+
 
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
@@ -25,6 +36,19 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    // 해당 메모리가 new 되는 시점에 터뜨려준다.
+    //_CrtSetBreakAlloc(221);
+
+
+    // COM 초기화 (Text Framework 관련 자동 할당 방지)
+ /*   HRESULT HResult = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
+    if (FAILED(HResult))
+    {
+        MessageBox(nullptr, L"COM 초기화 실패", L"에러", MB_OK);
+        return -1;
+    }*/
+
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -38,6 +62,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // 애플리케이션 초기화를 수행합니다:
     if (!InitInstance (hInstance, nCmdShow))
     {
+        //CoUninitialize(); // 초기화 실패 시도 반드시 정리
         return FALSE;
     }
 
@@ -61,6 +86,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     UCore::End();
 
+
+    // COM 해제
+    CoUninitialize();
+
+    ReportD3D11Leaks();
+   // _CrtDumpMemoryLeaks();
     return (int) msg.wParam;
 }
 
@@ -169,4 +200,21 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     }
     return (INT_PTR)FALSE;
+}
+
+void ReportD3D11Leaks()
+{
+    {
+        IDXGIDebug* DxgiDebug = nullptr;
+
+        if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&DxgiDebug))))
+        {
+            DxgiDebug->ReportLiveObjects(
+                DXGI_DEBUG_ALL,           // 전체 Live Object 추적
+                DXGI_DEBUG_RLO_ALL        // 모든 리소스 다 보여줘
+            );
+
+            DxgiDebug->Release();
+        }
+    }
 }

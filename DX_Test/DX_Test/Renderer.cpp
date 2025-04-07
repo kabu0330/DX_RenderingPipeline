@@ -387,11 +387,85 @@ void URenderer::ShaderResSetting()
 
 }
 
+void URenderer::Release()
+{
+	if (nullptr != SamplerState)
+	{
+		SamplerState->Release();
+		SamplerState = nullptr;
+	}
+
+	if (nullptr != TransformConstBuffer)
+	{
+		TransformConstBuffer->Release();
+		TransformConstBuffer = nullptr;
+	}
+
+	if (nullptr != VertexBuffer)
+	{
+		VertexBuffer->Release();
+		VertexBuffer = nullptr;
+	}
+
+	if (nullptr != InputLayout)
+	{
+		InputLayout->Release();
+		InputLayout = nullptr;
+	}
+
+	if (nullptr != IndexBuffer)
+	{
+		IndexBuffer->Release();
+		IndexBuffer = nullptr;
+	}
+
+	if (nullptr != VSShaderCodeBlob)
+	{
+		VSShaderCodeBlob->Release();
+		VSShaderCodeBlob = nullptr;
+	}
+
+	if (nullptr != VSErrorCodeBlob)
+	{
+		VSErrorCodeBlob->Release();
+		VSErrorCodeBlob = nullptr;
+	}
+
+	if (nullptr != VertexShader)
+	{
+		VertexShader->Release();
+		VertexShader = nullptr;
+	}
+
+	if (nullptr != RasterizerState)
+	{
+		RasterizerState->Release();
+		RasterizerState = nullptr;
+	}
+
+	if (nullptr != PSShaderCodeBlob)
+	{
+		PSShaderCodeBlob->Release();
+		PSShaderCodeBlob = nullptr;
+	}
+
+	if (nullptr != PSErrorCodeBlob)
+	{
+		PSErrorCodeBlob->Release();
+		PSErrorCodeBlob = nullptr;
+	}
+
+	if (nullptr != PixelShader)
+	{
+		PixelShader->Release();
+		PixelShader = nullptr;
+	}
+}
+
 URenderer::URenderer()
 {
 }
 
 URenderer::~URenderer()
 {
-
 }

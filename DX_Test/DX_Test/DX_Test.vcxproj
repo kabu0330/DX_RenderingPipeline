@@ -105,13 +105,14 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\; C:\Program Files (x86)\Visual Leak Detector\include;</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PreCompile.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Visual Leak Detector\lib\Win64;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -153,6 +154,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="MemoryTrace.h" />
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -190,6 +192,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="MemoryTrace.cpp" />
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>

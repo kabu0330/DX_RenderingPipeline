@@ -20,8 +20,6 @@ UCore::~UCore()
 
 void UCore::Start()
 {
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
 	WindowSize = { 1280, 900 };
 	SetWindowPosAndScale({ 100, 100 }, WindowSize);
 
@@ -40,5 +38,8 @@ void UCore::Tick()
 void UCore::End()
 {
 	GraphicsDevice.Release();
+
+	CurLevel->Release();
+	delete CurLevel;
 }
 
