@@ -5,25 +5,38 @@
 void URenderer::BeginPlay()
 {
 	// 2. Rendering Pipeline
+	ShaderResInit();
+
 	InputAssembler1Init();
 	VertexShaderInit();
 	InputAssembler2Init();
 	RasterizerInit();
 	PixelShaderInit();
-	ShaderResInit();
 }
 
 void URenderer::Render(float _DeltaTime)
 {
-
 	// 2. Rendering Pipeline
+	WorldViewProjection();
 	ShaderResSetting();
+
 	InputAssembler1Setting();
 	VertexShaderSetting();
 	InputAssembler2Setting();
 	RasterizerSetting();
 	PixelShaderSetting();
 	OutputMergeSetting();
+
+
+	// 디버깅
+	ID3D11DeviceContext* Context = UCore::GraphicsDevice.Context;
+	ID3D11RenderTargetView* CurrentRTV = nullptr;
+	Context->OMGetRenderTargets(1, &CurrentRTV, nullptr);
+	assert(CurrentRTV != nullptr);
+	if (CurrentRTV)
+	{
+		CurrentRTV->Release();
+	}
 
 	// 인덱스 버퍼를 통해서 그리겠다.
 	UCore::GraphicsDevice.Context->DrawIndexed(6, 0, 0);
@@ -65,13 +78,22 @@ void URenderer::InputAssembler2Init()
 	std::vector<unsigned int> Indices;
 	Indices.resize(6);
 
-	Indices.push_back(0);
-	Indices.push_back(1);
-	Indices.push_back(2);
+	//Indices.push_back(0);
+	//Indices.push_back(1);
+	//Indices.push_back(2);
 
-	Indices.push_back(1);
-	Indices.push_back(3);
-	Indices.push_back(2);
+	//Indices.push_back(1);
+	//Indices.push_back(3);
+	//Indices.push_back(2);
+
+	Indices[0] = 0;
+	Indices[1] = 1;
+	Indices[2] = 2;
+
+	Indices[3] = 1;
+	Indices[4] = 3;
+	Indices[5] = 2;
+
 	// 0    1
 	//
 	// 2    3
@@ -305,13 +327,64 @@ void URenderer::OutputMergeSetting()
 	UCore::GraphicsDevice.Context->OMSetRenderTargets(1, &RenderTargetView, nullptr); // 렌더링 데이터를 그릴 타겟이 어디냐
 }
 
+void URenderer::WorldViewProjection()
+{
+	FTransform& RendererTrans = GetTransformRef();
+	FVector CameraPos = { 0.0f, 0.0f, -1000.0f, 1.0f };
+	FTransform CameraMatrix;
+	CameraMatrix.Location = CameraPos;
+	RendererTrans.View = CameraMatrix.View;
+	RendererTrans.Projection = CameraMatrix.Projection;
+
+	RendererTrans.WVP = RendererTrans.World * RendererTrans.View * RendererTrans.Projection;
+}
+
 void URenderer::ShaderResInit()
 {
+	D3D11_BUFFER_DESC BufferInfo = { 0, };
+	BufferInfo.ByteWidth = sizeof(FTransform);
+	BufferInfo.BindFlags = D3D11_BIND_CONSTANT_BUFFER; // 상수 버퍼로 사용하겠다.
+	BufferInfo.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE; // CPU 쓰기
+	BufferInfo.Usage = D3D11_USAGE_DYNAMIC; // CPU가 동적으로 버퍼 업데이트, GPU 읽기 전용
 
+	if (S_OK != UCore::GraphicsDevice.Device->CreateBuffer(&BufferInfo, nullptr, &TransformConstBuffer))
+	{
+		MSGASSERT("상수 버퍼 생성에 실패했습니다.");
+		return;
+	}
 }
 
 void URenderer::ShaderResSetting()
 {
+	FTransform& RendererTrans = GetTransformRef(); // 수정할 데이터
+
+	D3D11_MAPPED_SUBRESOURCE Data = {}; 
+
+	UCore::GraphicsDevice.Context->Map( // Map : GPU 메모리를 CPU에서 조작할 수 있는 포인터 제공
+		TransformConstBuffer,    // GPU 메모리 버퍼
+		0,                       // 서브 리소스 인덱스
+		D3D11_MAP_WRITE_DISCARD, // 이전 데이터는 버리고 새 데이터로 교체
+		0,                       // 플래그
+		&Data					 // GPU 메모리의 정보를 담을 구조체
+	);
+
+	if (nullptr == Data.pData) // pData : GPU 메모리 버퍼 접근용 포인터
+	{
+		MSGASSERT("그래픽 카드 매핑에 실패했습니다. (Map returned nullptr)");
+		return;
+	}
+	
+	memcpy_s(
+		Data.pData,			// 복사받을 데이터(Ctrl + V)
+		sizeof(FTransform), // 복사받을 메모리 크기 == 복사할 메모리 크기
+		&RendererTrans,		// 복사할 데이터(Ctrl + C)
+		sizeof(FTransform)  // 복사할 메모리 크기 
+	);
+
+	UCore::GraphicsDevice.Context->Unmap(TransformConstBuffer, 0);
+
+	UCore::GraphicsDevice.Context->VSSetConstantBuffers(0, 1, &TransformConstBuffer);
+
 }
 
 URenderer::URenderer()

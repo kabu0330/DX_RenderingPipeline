@@ -26,12 +26,11 @@ VertexShaderOutput VertexToWorld(VertexData _Vertex)
 
 // --------------------------------------------------------------------
 
-Texture2D ImageTexture : register(t0);
-SamplerState ImageSampler : register(s0);
+//Texture2D ImageTexture : register(t0);
+//SamplerState ImageSampler : register(s0);
 
 float4 PixelToWorld(VertexShaderOutput _Vertex) : SV_Target0
 {
 	//float4 Color = ImageTexture.Sample(ImageSampler, _Vertex.TEXCOORD.xy);
-    float Color = _Vertex.COLOR;
-	return Color;
+	return _Vertex.COLOR;
 }

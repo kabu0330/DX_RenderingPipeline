@@ -1,16 +1,17 @@
 #pragma once
 
 #include <Base/EngineMath.h>
+#include "Actor.h"
 
 struct VertexData
 {
 	float4 POSITION;
-	/*float4 TEXCOORD;*/
+	float4 TEXCOORD;
 	float4 COLOR;
 };
 
 // 설명 :
-class URenderer
+class URenderer : public AActor
 {
 public:
 	// constrcuter destructer
@@ -25,9 +26,7 @@ public:
 
 	virtual void Render(float _DeltaTime);
 
-
-
-	void BeginPlay();
+	void BeginPlay() override;
 	void Release() {}
 
 protected:
@@ -36,6 +35,9 @@ private:
 
 
 private:
+	// WVP Setting
+	void WorldViewProjection();
+
 	// 상수버퍼
 	ID3D11SamplerState* SamplerState = nullptr;
 	ID3D11Buffer* TransformConstBuffer = nullptr;

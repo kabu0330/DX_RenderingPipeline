@@ -48,6 +48,11 @@ public:
 		Transform.Location += _Value;
 		Transform.TransformUpdate();
 	}
+
+	FTransform& GetTransformRef()
+	{
+		return Transform;
+	}
 	
 
 protected:
