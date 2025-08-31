@@ -165,7 +165,7 @@ void UGraphicsDevice::CreateBackBuffer()
 
 	DXGI_SWAP_CHAIN_DESC SwapChainInfo = { 0, }; // 기본값(0) 설정
 
-	SwapChainInfo.BufferCount = 2; // 백버퍼 몇 개 쓸건지?
+	SwapChainInfo.BufferCount = 2; // 버퍼 몇 개 쓸건지?
 	SwapChainInfo.BufferDesc.Width = UCore::WindowSize.iX();
 	SwapChainInfo.BufferDesc.Height = UCore::WindowSize.iY();
 	SwapChainInfo.OutputWindow = hWnd; // 최종 출력 창

@@ -67,9 +67,6 @@ std::wstring UEngineString::AnsiToUnicode(std::string_view _Name)
 	return Result;
 }
 
-
-
-
 std::string UEngineString::InterString(const std::string& _Text, std::string_view _Start, std::string_view _End, size_t& _Offset)
 {
 	size_t DataStart = _Text.find(_Start, _Offset);

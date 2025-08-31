@@ -42,6 +42,21 @@ void URenderer::Render(float _DeltaTime)
 	UCore::GraphicsDevice.Context->DrawIndexed(6, 0, 0);
 }
 
+void URenderer::ShaderResInit()
+{
+	D3D11_BUFFER_DESC BufferInfo = { 0, };
+	BufferInfo.ByteWidth = sizeof(FTransform);
+	BufferInfo.BindFlags = D3D11_BIND_CONSTANT_BUFFER; // 상수 버퍼로 사용하겠다.
+	BufferInfo.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE; // CPU 쓰기
+	BufferInfo.Usage = D3D11_USAGE_DYNAMIC; // CPU가 동적으로 버퍼 업데이트, GPU 읽기 전용
+
+	if (S_OK != UCore::GraphicsDevice.Device->CreateBuffer(&BufferInfo, nullptr, &TransformConstBuffer))
+	{
+		MSGASSERT("상수 버퍼 생성에 실패했습니다.");
+		return;
+	}
+}
+
 void URenderer::InputAssembler1Init()
 {
 	std::vector<VertexData> Vertices;
@@ -337,21 +352,6 @@ void URenderer::WorldViewProjection()
 	RendererTrans.Projection = CameraMatrix.Projection;
 
 	RendererTrans.WVP = RendererTrans.World * RendererTrans.View * RendererTrans.Projection;
-}
-
-void URenderer::ShaderResInit()
-{
-	D3D11_BUFFER_DESC BufferInfo = { 0, };
-	BufferInfo.ByteWidth = sizeof(FTransform);
-	BufferInfo.BindFlags = D3D11_BIND_CONSTANT_BUFFER; // 상수 버퍼로 사용하겠다.
-	BufferInfo.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE; // CPU 쓰기
-	BufferInfo.Usage = D3D11_USAGE_DYNAMIC; // CPU가 동적으로 버퍼 업데이트, GPU 읽기 전용
-
-	if (S_OK != UCore::GraphicsDevice.Device->CreateBuffer(&BufferInfo, nullptr, &TransformConstBuffer))
-	{
-		MSGASSERT("상수 버퍼 생성에 실패했습니다.");
-		return;
-	}
 }
 
 void URenderer::ShaderResSetting()
